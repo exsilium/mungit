@@ -94,7 +94,7 @@
     "npm-check-updates": "~11.5.13",
     "nyc": "~15.1.0",
     "prettier": "~2.4.1",
-    "puppeteer": "~9.1.1",
+    "puppeteer": "~13.2.0",
     "superagent": "~6.1.0",
     "supertest": "~6.1.3"
   },
