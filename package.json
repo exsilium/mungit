@@ -66,7 +66,7 @@
     "raven-js": "~3.27.2",
     "rc": "~1.2.8",
     "rimraf": "~4.1.1",
-    "semver": "~7.4.0",
+    "semver": "~7.5.3",
     "serve-static": "~1.15.0",
     "signals": "~1.0.0",
     "snapsvg": "~0.5.1",
