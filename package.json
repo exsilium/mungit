@@ -78,7 +78,7 @@
     "yargs": "~17.7.1"
   },
   "devDependencies": {
-    "@homer0/prettier-plugin-jsdoc": "~6.0.0",
+    "@homer0/prettier-plugin-jsdoc": "~8.0.0",
     "archiver": "~5.3.1",
     "browserify": "~17.0.0",
     "dedent": "~0.7.0",
