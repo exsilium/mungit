@@ -65,7 +65,7 @@
     "jsonwebtoken": "~9.0.0",
     "raven-js": "~3.27.2",
     "rc": "~1.2.8",
-    "rimraf": "~4.1.1",
+    "rimraf": "~5.0.5",
     "semver": "~7.5.4",
     "serve-static": "~1.15.0",
     "signals": "~1.0.0",
