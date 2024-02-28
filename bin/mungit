@@ -4,10 +4,17 @@ const startLaunchTime = Date.now();
 
 // eslint-disable-next-line no-unused-vars -- Imported for side effects
 const config = require('../source/config');
-const open = require('open');
 const path = require('path');
 const child_process = require('child_process');
 const { encodePath } = require('../source/address-parser');
+
+// Coverting open require to dynamic import
+let open;
+import('open').then(module => {
+    open = module.default;
+}).catch(err => {
+    console.error('Failed to load the open module', err);
+});
 
 const BugTracker = require('../source/bugtracker');
 const bugtracker = new BugTracker('launcher');
