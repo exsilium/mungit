@@ -7,9 +7,9 @@ const config = require('./config');
 exports.getUngitLatestVersion = () => {
   // eslint-disable-next-line node/no-unsupported-features/es-syntax
   return import('latest-version').then((latestVersion) => {
-    return latestVersion.default('ungit');
-  });
-};
+    return latestVersion.default('mungit');
+});
+}
 
 exports.getUserHash = () => {
   let addr;

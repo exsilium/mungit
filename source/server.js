@@ -15,6 +15,7 @@ const os = require('os');
 const cache = require('./utils/cache');
 const UngitPlugin = require('./ungit-plugin');
 const serveStatic = require('serve-static');
+const jwt = require('jsonwebtoken');
 
 process.on('uncaughtException', (err) => {
   logger.error(err.stack ? err.stack.toString() : err.toString());
@@ -26,6 +27,14 @@ const users = config.users;
 config.users = null; // So that we don't send the users to the client
 
 if (config.authentication) {
+  // Tokenize users
+  for (var i = 0, l = Object.keys(users).length; i < l; i++) {
+    var userEntry =  { };
+    userEntry[Object.keys(users)[i]] = users[Object.keys(users)[i]];
+    var token = jwt.sign(userEntry, sysinfo.getUserHash(), { noTimestamp: true });
+    console.log('!! Tokenizing user: ' + Object.keys(users)[i] + ' - ' + token);
+  }
+  
   passport.serializeUser((username, done) => {
     done(null, username);
   });
@@ -131,7 +140,7 @@ if (config.authentication) {
       store: new MemoryStore({
         checkPeriod: 86400000, // prune expired entries every 24h
       }),
-      secret: 'ungit',
+      secret: 'mungit',
       resave: true,
       saveUninitialized: true,
     })
@@ -156,6 +165,34 @@ if (config.authentication) {
         return;
       });
     })(req, res, next);
+  });
+  
+  app.post('/api/logintoken', (req, res, next) => {
+    if(!req.body.token) {
+      res.status(401).json({ errorCode: 'authentication-failed', error: "No Token" });
+      return;
+    }
+    else {
+      try {
+        var userData = jwt.verify(req.body.token, sysinfo.getUserHash());
+        req.body = { username: Object.keys(userData)[0], password: userData[Object.keys(userData)[0]] };
+      
+        passport.authenticate('local', (err, user, info) => {
+          if (err) { return next(err) }
+          if (!user) {
+            res.status(401).json({ errorCode: 'authentication-failed', error: info.message });
+            return;
+          }
+          req.logIn(user, (err) => {
+            if (err) { return next(err); }
+            res.json({ ok: true });
+            return;
+          });
+        })(req, res, next);  
+      } catch (err) {
+        return next(new Error('Invalid token'));
+      }
+    }
   });
 
   app.get('/api/loggedin', (req, res) => {
@@ -213,13 +250,13 @@ const socketIO = require('socket.io');
 const socketsById = {};
 let socketIdCounter = 0;
 const io = socketIO(server, {
-  path: config.rootPath + '/socket.io',
-  logger: {
-    debug: logger.debug.bind(logger),
-    info: logger.info.bind(logger),
-    error: logger.error.bind(logger),
-    warn: logger.warn.bind(logger),
-  },
+path: config.rootPath + '/socket.io',
+logger: {
+  debug: logger.debug.bind(logger),
+  info: logger.info.bind(logger),
+  error: logger.error.bind(logger),
+  warn: logger.warn.bind(logger),
+},
 });
 io.on('connection', (socket) => {
   const socketId = socketIdCounter++;
@@ -417,6 +454,6 @@ exports.started = new signals.Signal();
 
 server.listen({ port: config.port, host: config.ungitBindIp }, () => {
   logger.info('Listening on port ' + config.port);
-  console.log('## Ungit started ##'); // Consumed by bin/ungit to figure out when the app is started
+  console.log('## Mungit started ##'); // Consumed by bin/mungit to figure out when the app is started
   exports.started.dispatch();
 });
