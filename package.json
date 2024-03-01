@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@homer0/prettier-plugin-jsdoc": "~8.0.0",
-    "archiver": "~6.0.1",
+    "archiver": "~7.0.0",
     "browserify": "~17.0.0",
     "dedent": "~1.5.1",
     "electron": "~29.1.0",
