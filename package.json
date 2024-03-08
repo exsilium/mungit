@@ -58,7 +58,7 @@
     "node-cache": "~5.1.2",
     "node-watch": "~0.7.4",
     "nprogress": "~0.2.0",
-    "open": "~10.0.3",
+    "open": "~10.1.0",
     "p-limit": "~5.0.0",
     "passport": "~0.7.0",
     "passport-local": "~1.0.0",
