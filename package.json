@@ -73,7 +73,7 @@
     "socket.io": "~4.7.4",
     "temp": "~0.9.4",
     "tsify": "~5.0.4",
-    "typescript": "~5.3.3",
+    "typescript": "~5.4.5",
     "winston": "~3.11.0",
     "yargs": "~17.7.2"
   },
