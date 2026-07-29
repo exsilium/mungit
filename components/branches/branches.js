@@ -4,6 +4,7 @@ const octicons = require('octicons');
 const components = require('ungit-components');
 const storage = require('ungit-storage');
 const showRemote = 'showRemote';
+var octicon = require('octicons');
 const showBranch = 'showBranch';
 const showTag = 'showTag';
 const { ComponentRoot } = require('../ComponentRoot');
@@ -21,6 +22,7 @@ class BranchesViewModel extends ComponentRoot {
     this.branchesAndLocalTags = ko.observableArray();
     this.current = ko.observable();
     this.isShowRemote = ko.observable(storage.getItem(showRemote) != 'false');
+    this.icon = octicon['git-branch'].toSVG({ "height": 20 });
     this.isShowBranch = ko.observable(storage.getItem(showBranch) != 'false');
     this.isShowTag = ko.observable(storage.getItem(showTag) != 'false');
     this.graph = graph;

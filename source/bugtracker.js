@@ -5,7 +5,7 @@ const sysinfo = require('./sysinfo');
 const config = require('./config');
 const raven = require('raven-js');
 const client = new raven.Client(
-  'https://58f16d6f010d4c77900bb1de9c02185f:84b7432f56674fbc8522bc84cc7b30f4@app.getsentry.com/12434'
+  'https://1ccfef6f2d3e41a2b74372e22546731c:17bd0b6ba90a489c981365323b518419@sentry.io/244250'
 );
 
 class BugTracker {

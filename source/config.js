@@ -37,8 +37,8 @@ const defaultConfig = {
   // True to enable authentication. Users are defined in the users configuration property.
   authentication: false,
 
-  // Map of username/passwords which are granted access.
-  users: {},
+  // Map of username/passwords which are granted access. --users.<USERNAME> <PASSWORD> or via .ungitrc as "users": { "username": "password" }
+  users: undefined,
 
   // Set to false to show rebase and merge on drag and drop on all nodes.
   showRebaseAndMergeOnlyOnRefs: true,
@@ -170,7 +170,7 @@ const defaultConfig = {
   isEnableNumStat: true,
 };
 
-// Works for now but should be moved to bin/ungit
+// Works for now but should be moved to bin/mungit
 const argv = yargs
   .usage('$0 [-v] [-b] [--cliconfigonly] [--gitVersionCheckOverride]')
   .example('$0 --port=8888', 'Run Ungit on port 8888')
@@ -213,14 +213,14 @@ const argv = yargs
   .boolean('logGitCommands')
   .describe('logGitOutput', 'Write the result of git commands issued to the log')
   .boolean('logGitOutput')
-  .describe('bugtracking', 'This will automatically send anonymous bug reports')
+  .describe('bugtracking', 'This will automatically send anonymous bug reports (Sentry.io)')
   .boolean('bugtracking')
   .describe(
     'authentication',
     'True to enable authentication. Users are defined in the users configuration property'
   )
-  .boolean('authentication')
-  .describe('users', 'Map of username/passwords which are granted access')
+.boolean('authentication')
+.describe('users', 'Map of username/passwords which are granted access. Use as --users.<USERNAME> <PASSWORD>')
   .describe(
     'showRebaseAndMergeOnlyOnRefs',
     'Set to false to show rebase and merge on drag and drop on all nodes'
