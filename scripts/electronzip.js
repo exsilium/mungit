@@ -11,14 +11,14 @@ const distDir = path.join(baseDir, 'dist');
   let distFiles = [];
   try {
     distFiles = await fs.readdir(distDir);
-  } catch (e) {
+  } catch {
     await fs.mkdir(distDir);
   }
   for (const distFile of distFiles) {
     await fs.unlink(path.join(distDir, distFile));
   }
 
-  let buildFolders = [];
+  let buildFolders;
   try {
     buildFolders = await fs.readdir(buildDir);
   } catch (e) {

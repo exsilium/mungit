@@ -23,7 +23,7 @@ class LoginViewModel {
           this.status('login');
         }
       })
-      .catch((err) => {});
+      .catch(() => {});
 
     if(token !== undefined) {
       this.login();
@@ -37,7 +37,7 @@ class LoginViewModel {
   login() {
     if(this.token === undefined || (this.username() && this.password())) {
       this.server.postPromise('/login', { username: this.username(), password: this.password() })
-      .then((res) => {
+      .then(() => {
         this.loggedIn.dispatch();
         this.status('loggedIn');
       })
@@ -50,7 +50,7 @@ class LoginViewModel {
       });
     }
     else {
-      this.server.postPromise('/logintoken', { token: this.token }).then(res => {
+      this.server.postPromise('/logintoken', { token: this.token }).then(() => {
         this.loggedIn.dispatch();
         this.status('loggedIn');
       }).catch(err => {

@@ -1,8 +1,7 @@
 const path = require('path');
 const fileType = require('./utils/file-type.js');
-const _ = require('lodash');
 
-exports.parseGitStatus = (text, args) => {
+exports.parseGitStatus = (text) => {
   let lines = text.split('\x00');
   const branch = lines[0].split(' ').pop();
   // skipping first line...
@@ -133,7 +132,7 @@ exports.parseGitLog = (data) => {
       const refs = row.substring(refStartIndex + 1, row.length - 1);
       currentCommmit.refs = refs.split(/ -> |, /g);
     }
-    currentCommmit.isHead = !!_.find(currentCommmit.refs, (item) => {
+    currentCommmit.isHead = currentCommmit.refs.some((item) => {
       return item.trim() === 'HEAD';
     });
     commits.isHeadExist = commits.isHeadExist || currentCommmit.isHead;
@@ -245,9 +244,25 @@ exports.parseGitTags = (text) => {
 };
 
 exports.parseGitRemotes = (text) => {
-  return text.split('\n').filter((remote) => {
-    return remote != '';
+  const remotes = {};
+  text.split('\n').forEach((row) => {
+    if (row.trim() == '') return;
+    const parts = row.split('\t');
+    const name = parts[0];
+    const remote = remotes[name] || { name };
+    if (parts.length > 1) {
+      const url = parts[1];
+      if (url.endsWith(' (fetch)')) {
+        remote.fetchUrl = url.substring(0, url.length - 8);
+      } else if (url.endsWith(' (push)')) {
+        remote.pushUrl = url.substring(0, url.length - 7);
+      } else {
+        remote.url = url;
+      }
+    }
+    remotes[name] = remote;
   });
+  return Object.values(remotes);
 };
 
 exports.parseGitLsRemote = (text) => {

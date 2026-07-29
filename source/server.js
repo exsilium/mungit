@@ -356,7 +356,7 @@ app.get('/api/latestversion', (req, res) => {
         });
       }
     })
-    .catch((err) => {
+    .catch(() => {
       res.json({
         latestVersion: config.ungitDevVersion,
         currentVersion: config.ungitDevVersion,
@@ -444,6 +444,7 @@ app.get('/api/fs/listDirectories', ensureAuthenticated, (req, res) => {
 });
 
 // Error handling
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   bugtracker.notify(err, 'ungit-node');
   logger.error(err.stack);
