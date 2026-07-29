@@ -6,9 +6,9 @@ const config = require('./config');
 
 exports.getUngitLatestVersion = () => {
   return import('latest-version').then((latestVersion) => {
-    return latestVersion.default('ungit');
-  });
-};
+    return latestVersion.default('mungit');
+});
+}
 
 exports.getUserHash = () => {
   let addr;
