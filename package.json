@@ -1,11 +1,15 @@
 {
-  "name": "ungit",
-  "author": "Fredrik Norén <fredrik.jw.noren@gmail.com>",
-  "description": "Git made easy",
-  "version": "1.5.26",
+  "name": "mungit",
+  "author": "Sten Feldman <exile@chamber.ee>",
+  "contributors": [
+    "Fredrik Norén <fredrik.jw.noren@gmail.com>",
+    "Sten Feldman <exile@chamber.ee> (http://sten.feldman.eesti.ee/)"
+  ],
+  "description": "Git made easy, a fork of ungit",
+  "version": "1.4.0",
   "ungitPluginApiVersion": "0.2.0",
   "scripts": {
-    "start": "node ./bin/ungit",
+    "start": "node ./bin/mungit",
     "inspect": "node --inspect ./source/server.js",
     "test": "npm run unittest && npm run clicktest",
     "unittest": "mocha --config .mochatest.json",
@@ -17,15 +21,16 @@
     "watch": "nodemon -C --exec \"npm run build\" -e js,less -w public/source -w public/less -w components/ -i \"*.bundle.js\"",
     "bumpdependencies": "ncu --upgrade --reject bootstrap",
     "electronpackage": "node ./scripts/electronpackage.js",
-    "electronzip": "node ./scripts/electronzip.js"
+    "electronzip": "node ./scripts/electronzip.js",
+    "clean": "rm -rf public/css public/js public/fonts/glyphicons-*; find ./components -name '*.bundle.js' | xargs rm; find ./components -name '*.map' | xargs rm; find ./components -name '*.css' | xargs rm"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/FredrikNoren/ungit.git"
+    "url": "https://github.com/exsilium/mungit.git"
   },
   "bin": {
-    "ungit": "./bin/ungit",
-    "0ungit-credentials-helper": "./bin/credentials-helper"
+    "mungit": "./bin/mungit",
+    "0mungit-credentials-helper": "./bin/credentials-helper"
   },
   "dependencies": {
     "@primer/octicons": "~19.9.0",
@@ -57,6 +62,7 @@
     "p-limit": "~5.0.0",
     "passport": "~0.7.0",
     "passport-local": "~1.0.0",
+    "jsonwebtoken": "~9.0.0",
     "raven-js": "~3.27.2",
     "rc": "~1.2.8",
     "rimraf": "~5.0.5",

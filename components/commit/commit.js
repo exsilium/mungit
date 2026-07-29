@@ -39,6 +39,13 @@ class CommitViewModel {
         return { 'margin-left': `${marginLeft}px`, width: `${window.innerWidth - 220}px` };
       else return {};
     });
+
+    this.transferProtocol = 'http';  
+    if(ungit.config.urlBase.length >= 5) {
+      if(ungit.config.urlBase[4].toUpperCase() === 'S') {
+        this.transferProtocol = 'https';
+      }
+    }
   }
 
   updateNode(parentElement) {
