@@ -3,10 +3,17 @@
 const startLaunchTime = Date.now();
 
 const config = require('../source/config');
-const openPromise = import('open');
 const path = require('path');
 const child_process = require('child_process');
 const { encodePath } = require('../source/address-parser');
+
+// Coverting open require to dynamic import
+let open;
+import('open').then(module => {
+    open = module.default;
+}).catch(err => {
+    console.error('Failed to load the open module', err);
+});
 
 const BugTracker = require('../source/bugtracker');
 const bugtracker = new BugTracker('launcher');
@@ -72,11 +79,14 @@ const launch = () => {
   );
 
   child.on('exit', (res) => {
-    console.log('Stopped keeping ungit alive');
+    console.log('Stopped keeping mungit alive');
   });
 
   const startupListener = (data) => {
-    if (data.toString().indexOf('## Ungit started ##') >= 0) {
+    if (data.toString().indexOf('!!') >= 0) {
+      console.log(data.toString().trim());
+    }
+    else if (data.toString().indexOf('## Mungit started ##') >= 0) {
       child.removeListener('stdout', startupListener);
       child.stdout.on('data', (data) => console.log(data.toString().trim()));
       const launchTime = Date.now() - startLaunchTime;

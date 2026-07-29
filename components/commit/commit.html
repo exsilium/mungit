@@ -11,8 +11,9 @@
       <div class="arrow"></div>
       <div class="clearfix">
         <img
+          crossorigin="anonymous"
           class="pull-left img-circle gravatar"
-          data-bind="attr: { src: `https://www.gravatar.com/avatar/${authorGravatar()}?default=404`, alt: `Profile Picture of ${authorName()}` }"
+          data-bind="attr: { src: `https://secure.gravatar.com/avatar/${authorGravatar()}?default=404`, alt: `Profile Picture of ${authorName()}` }"
           onerror="this.style.display='none';"
         />
         <div>
