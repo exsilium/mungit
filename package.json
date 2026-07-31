@@ -96,7 +96,7 @@
     "globals": "~17.3.0",
     "mocha": "~11.7.5",
     "nodemon": "~3.1.14",
-    "npm-check-updates": "~19.6.3",
+    "npm-check-updates": "~23.0.0",
     "nyc": "~18.0.0",
     "portfinder": "~1.0.38",
     "prettier": "~3.8.1",
