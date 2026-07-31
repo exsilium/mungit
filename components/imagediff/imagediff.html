@@ -1,12 +1,12 @@
 <!-- ko if: isShowingDiffs -->
 <!-- ko if: state() == 'new' -->
 <div class="imageDiff img-added">
-  <img data-bind="attr: { src: newImageSrc }" class="img-responsive" />
+  <img data-bind="attr: { src: newImageSrc }" class="img-fluid" />
 </div>
 <!-- /ko -->
 <!-- ko if: state() == 'removed' -->
 <div class="imageDiff img-removed">
-  <img data-bind="attr: { src: oldImageSrc }" class="img-responsive" />
+  <img data-bind="attr: { src: oldImageSrc }" class="img-fluid" />
 </div>
 <!-- /ko -->
 <!-- ko if: state() == 'changed' -->
@@ -15,7 +15,7 @@
     <div class="col-lg-5">
       <img
         data-bind="event: {error: oldImageError }, attr: { src: oldImageSrc }"
-        class="img-responsive"
+        class="img-fluid"
       />
     </div>
     <div class="col-lg-2">
@@ -25,7 +25,7 @@
     <div class="col-lg-5">
       <img
         data-bind="event: {error: newImageError }, attr: { src: newImageSrc }"
-        class="img-responsive"
+        class="img-fluid"
       />
     </div>
   </div>

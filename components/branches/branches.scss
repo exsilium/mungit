@@ -1,9 +1,9 @@
-@import 'public/less/variables.less';
+@import 'public/scss/variables';
 
 .branch {
   .options {
     font-size: inherit;
-    color: @gray-dark;
+    color: $gray-dark;
 
     label {
       cursor: pointer;

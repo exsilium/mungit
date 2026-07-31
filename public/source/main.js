@@ -2,7 +2,7 @@ var $ = require('jquery');
 jQuery = $; // this is for old backward compatability of bootrap modules
 var ko = require('knockout');
 var dndPageScroll = require('dnd-page-scroll');
-require('./bootstrap');
+var bootstrap = require('./bootstrap');
 require('./jquery-ui');
 require('./knockout-bindings');
 const winston = require('winston');
@@ -55,8 +55,10 @@ var adBlocker = require('just-detect-adblock');
       clearTimeout(id);
     };
 
-  $(document).tooltip({
-    selector: '[data-toggle="tooltip"]',
+  // Bootstrap 5 has no jQuery tooltip plugin; a single delegated instance on
+  // <body> replaces $(document).tooltip({ selector: ... }).
+  new bootstrap.Tooltip(document.body, {
+    selector: '[data-bs-toggle="tooltip"]',
   });
 })();
 

@@ -1,0 +1,104 @@
+@use 'sass:color';
+
+// Application and Bootstrap variable overrides.
+//
+// This file is deliberately free of Bootstrap imports so that component
+// stylesheets, which are compiled individually, can pull in just the variables
+// they need without paying for the whole framework.
+//
+// Anything declared here without !default overrides Bootstrap's own !default
+// declaration, so this file must always be imported before Bootstrap's
+// variables (see _bootstrap.scss).
+
+// Application variables
+// --------------------------------------------------
+$log-width-small: 400px;
+$log-width-large: 550px;
+
+// Bootstrap 3 exposed a @screen-md-min breakpoint at 992px. Bootstrap 5's
+// breakpoint of that width is `lg`, not `md`, so the value is kept explicit
+// here to preserve the layout's original switch-over point.
+$screen-md-min: 992px;
+
+// Bootstrap 3's @gray-dark. Bootstrap 5 has no equivalent shade, so the
+// original value is carried over verbatim.
+$gray-dark: #333;
+
+// Scaffolding
+// --------------------------------------------------
+$body-bg: #303030;
+$text-color: #d8d8d8;
+$body-color: $text-color;
+
+// Links
+// --------------------------------------------------
+// NOTE: public/less/variables.less declared `@link-color #a6a6a6;` without a
+// colon, so Less silently discarded it and links rendered with Bootstrap 3's
+// default #337ab7. That value is pinned here so this migration does not change
+// the rendered appearance. To apply the colour that was evidently intended,
+// change this to #a6a6a6.
+$link-color: #337ab7;
+$link-hover-color: color.adjust($link-color, $lightness: 15%);
+
+// Typography
+// --------------------------------------------------
+$font-family-sans-serif: 'Open Sans', sans-serif;
+$font-family-monospace: 'Source Code Pro', monospace;
+$text-muted: #7a7a7a;
+
+// Buttons
+// --------------------------------------------------
+// Bootstrap 5 removed the `default` button variant. These feed the .btn-default
+// compatibility class in _compat.scss.
+$btn-default-color: $text-color;
+$btn-default-bg: #556666;
+$btn-default-border: rgba(0, 0, 0, 0.1);
+
+// Forms
+// --------------------------------------------------
+$input-bg: rgba(255, 255, 255, 0.1);
+$input-color: rgba(255, 255, 255, 0.8);
+// Renamed from Bootstrap 3's @input-color-placeholder.
+$input-placeholder-color: rgba(255, 255, 255, 0.3);
+
+// Navbar
+// --------------------------------------------------
+// Bootstrap 5 dropped the navbar background variables (@navbar-default-bg) in
+// favour of .bg-* utilities, so this is applied manually in _compat.scss.
+$navbar-bg: #404040;
+
+// Tooltips
+// --------------------------------------------------
+$tooltip-color: $text-color;
+$tooltip-bg: #4d4d4d;
+$tooltip-arrow-width: 8px;
+
+// Panels / cards
+// --------------------------------------------------
+// Bootstrap 5 replaced panels with cards. The panel variables are kept because
+// component stylesheets and templates still refer to them.
+$panel-bg: #4d4d4d;
+$panel-default-text: $text-color;
+$panel-default-border: #353535;
+$panel-default-heading-bg: #3c3c3c;
+
+$card-bg: $panel-bg;
+$card-color: $panel-default-text;
+$card-border-color: $panel-default-border;
+$card-cap-bg: $panel-default-heading-bg;
+
+// List group
+// --------------------------------------------------
+$list-group-bg: rgba(0, 0, 0, 0.09);
+$list-group-border: #555555;
+// Renamed from Bootstrap 3's @list-group-border.
+$list-group-border-color: $list-group-border;
+$list-group-hover-bg: rgba(0, 0, 0, 0.2);
+// Renamed from Bootstrap 3's @list-group-link-color.
+$list-group-action-color: rgba(255, 255, 255, 0.5);
+$list-group-link-heading-color: rgba(255, 255, 255, 0.8);
+
+// Modals
+// --------------------------------------------------
+$modal-content-bg: $panel-bg;
+$modal-header-border-color: $list-group-border;

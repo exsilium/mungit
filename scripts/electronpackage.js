@@ -34,7 +34,7 @@ const builds = process.argv.includes('--all') // keep in sync with ci.yml (https
       overwrite: platform == 'current',
       appCopyright: 'Copyright (c) 2013-2026 Fredrik Norén',
       ignore: [
-        /^\/(?:[^/]+?\/)*(?:\..+|.+\.less)$/, // dot-files and less files anywhere
+        /^\/(?:[^/]+?\/)*(?:\..+|.+\.scss)$/, // dot-files and sass files anywhere
         /^\/(?:\..+|assets|clicktests|coverage|dist|scripts|test)\//, // folders in root
         /^\/[^/]+?\.(?:js|md|png|tgz|yml)$/, // files in root
         /^\/public\/(?:source|vendor)\//, // folders in /public

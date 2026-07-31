@@ -1,4 +1,4 @@
-@import 'public/less/variables.less';
+@import 'public/scss/variables';
 
 .graph {
   position: relative;
@@ -38,7 +38,7 @@
     .rightSideContainer {
       position: absolute;
       display: flex;
-      margin-left: (@log-width-small + 40px);
+      margin-left: ($log-width-small + 40px);
       top: -22px;
       white-space: nowrap;
       height: 40px;

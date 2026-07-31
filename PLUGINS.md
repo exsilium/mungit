@@ -69,7 +69,7 @@ An [example](https://github.com/FredrikNoren/ungit/tree/master/components/stagin
    Each component can have multiple views as exampled [here](https://github.com/FredrikNoren/ungit/tree/master/components/dialogs).
 
 * CSS for Component
-   css file can be easily defined per components and in above example we can see that `staging.less` file is compiled into `staging.css` via `npm run build` script.
+   css file can be easily defined per components and in above example we can see that `staging.scss` file is compiled into `staging.css` via `npm run build` script.
 
 * JS for Component
 
