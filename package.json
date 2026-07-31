@@ -83,7 +83,7 @@
     "archiver": "~7.0.1",
     "browserify": "~17.0.1",
     "dedent": "~1.7.1",
-    "electron": "~40.6.1",
+    "electron": "~43.2.0",
     "electron-packager": "~17.1.2",
     "eslint": "~10.8.0",
     "eslint-config-prettier": "~10.1.8",
