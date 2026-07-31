@@ -37,7 +37,7 @@
     "@primer/octicons": "~19.22.0",
     "blueimp-md5": "~2.19.0",
     "body-parser": "~2.2.2",
-    "bootstrap": "~3.4.1",
+    "bootstrap": "~5.3.8",
     "chokidar": "~5.0.0",
     "cookie-parser": "~1.4.7",
     "crossroads": "~0.12.2",
