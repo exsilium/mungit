@@ -49,7 +49,7 @@
     "getmac": "~6.6.0",
     "hasher": "~1.2.0",
     "ignore": "~7.0.5",
-    "jquery": "~3.7.1",
+    "jquery": "~4.0.0",
     "jquery-ui": "~1.14.2",
     "jsonwebtoken": "~9.0.0",
     "just-detect-adblock": "~1.1.0",
