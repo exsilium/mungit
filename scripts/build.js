@@ -4,8 +4,8 @@ const path = require('path');
 
 const browserify = require('browserify');
 const exorcist = require('exorcist');
-const less = require('less');
 const { mkdirp } = require('mkdirp');
+const sass = require('sass');
 
 const tsTransform = require('./ts-transform');
 
@@ -20,24 +20,24 @@ const baseDir = path.join(__dirname, '..');
     .filter((component) => component.isDirectory())
     .map((component) => component.name);
 
-  // less
-  console.log('less:common');
-  await lessFile(
-    path.join(baseDir, 'public/less/styles.less'),
+  // sass
+  console.log('sass:common');
+  await sassFile(
+    path.join(baseDir, 'public/scss/styles.scss'),
     path.join(baseDir, 'public/css/styles.css')
   );
 
-  console.log('less:components');
+  console.log('sass:components');
   await Promise.all(
     components.map(async (component) => {
       const componentPath = path.join(baseDir, `components/${component}/${component}`);
       try {
-        await fs.access(`${componentPath}.less`);
+        await fs.access(`${componentPath}.scss`);
       } catch {
         /* ignore */
         return;
       }
-      return lessFile(`${componentPath}.less`, `${componentPath}.css`);
+      return sassFile(`${componentPath}.scss`, `${componentPath}.css`);
     })
   );
 
@@ -56,6 +56,9 @@ const baseDir = path.join(__dirname, '..');
   b.require(path.join(baseDir, 'source/address-parser.js'), { expose: 'ungit-address-parser' });
   b.require('bluebird', { expose: 'bluebird' });
   b.require('blueimp-md5', { expose: 'blueimp-md5' });
+  // Exposed so component bundles, which are built with bundleExternal: false,
+  // can drive modals imperatively now that Bootstrap 5 has no jQuery plugin.
+  b.require('bootstrap/js/dist/modal', { expose: 'bootstrap/js/dist/modal' });
   b.require('diff2html', { expose: 'diff2html' });
   b.require('jquery', { expose: 'jquery' });
   b.require('knockout', { expose: 'knockout' });
@@ -67,10 +70,11 @@ const baseDir = path.join(__dirname, '..');
   b.require('winston', { expose: 'winston' });
   const ungitjsFile = path.join(baseDir, 'public/js/ungit.js');
   const mapFile = path.join(baseDir, 'public/js/ungit.js.map');
-  await new Promise((resolve) => {
+  await new Promise((resolve, reject) => {
     const outFile = fsSync.createWriteStream(ungitjsFile);
     outFile.on('close', () => resolve());
-    b.bundle().pipe(exorcist(mapFile)).pipe(outFile);
+    outFile.on('error', reject);
+    b.bundle().on('error', reject).pipe(exorcist(mapFile)).pipe(outFile);
   });
   console.log(`browserify ${path.relative(baseDir, ungitjsFile)}`);
 
@@ -93,18 +97,8 @@ const baseDir = path.join(__dirname, '..');
   }
 
   // copy
-  console.log('copy bootstrap fonts');
-  await Promise.all(
-    [
-      'node_modules/bootstrap/fonts/glyphicons-halflings-regular.eot',
-      'node_modules/bootstrap/fonts/glyphicons-halflings-regular.svg',
-      'node_modules/bootstrap/fonts/glyphicons-halflings-regular.ttf',
-      'node_modules/bootstrap/fonts/glyphicons-halflings-regular.woff',
-      'node_modules/bootstrap/fonts/glyphicons-halflings-regular.woff2',
-    ].map(async (file) => {
-      await copyToFolder(file, 'public/fonts');
-    })
-  );
+  // Bootstrap dropped Glyphicons in v4, so there are no longer any fonts to
+  // copy out of the package; see the glyphicon rules in public/scss/_compat.scss.
 
   console.log('copy raven');
   await Promise.all(
@@ -116,18 +110,32 @@ const baseDir = path.join(__dirname, '..');
   );
 })();
 
-async function lessFile(source, destination) {
-  const input = await fs.readFile(source, { encoding: 'utf8' });
-  const output = await less.render(input, {
-    filename: source,
-    sourceMap: {
-      outputSourceFiles: true,
-      sourceMapURL: `${path.basename(destination)}.map`,
-    },
+async function sassFile(source, destination) {
+  const output = sass.compile(source, {
+    // Component stylesheets are compiled individually and refer to the shared
+    // variables as 'public/scss/variables', which resolves from the repo root.
+    loadPaths: [baseDir],
+    sourceMap: true,
+    sourceMapIncludeSources: true,
+    // Bootstrap 5.3 predates several Dart Sass deprecations (@import, global
+    // colour/maths builtins, the old if() signature) and emits ~290 warnings
+    // that would bury real build output. These are silenced for that reason
+    // only; the application's own Sass is free of them, so the list should be
+    // trimmed as Bootstrap modernises rather than extended.
+    silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'if-function'],
   });
-  await fs.writeFile(destination, output.css);
-  await fs.writeFile(`${destination}.map`, output.map);
-  console.log(`less ${path.relative(baseDir, destination)}`);
+
+  const map = { ...output.sourceMap, sources: output.sourceMap.sources.map(relativeSource) };
+  await fs.writeFile(
+    destination,
+    `${output.css}\n/*# sourceMappingURL=${path.basename(destination)}.map */\n`
+  );
+  await fs.writeFile(`${destination}.map`, JSON.stringify(map));
+  console.log(`sass ${path.relative(baseDir, destination)}`);
+}
+
+function relativeSource(source) {
+  return source.startsWith('file://') ? path.relative(baseDir, new URL(source).pathname) : source;
 }
 
 async function firstExisting(candidates) {

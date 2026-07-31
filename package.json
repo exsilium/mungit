@@ -19,11 +19,11 @@
     "format": "npm run lint -- --fix",
     "typecheck": "tsc --noEmit",
     "build": "npm run typecheck && node --trace-deprecation ./scripts/build.js",
-    "watch": "nodemon -C --exec \"npm run build\" -e js,less -w public/source -w public/less -w components/ -i \"*.bundle.js\"",
-    "bumpdependencies": "ncu --upgrade --reject jquery --reject bootstrap",
+    "watch": "nodemon -C --exec \"npm run build\" -e js,scss -w public/source -w public/scss -w components/ -i \"*.bundle.js\"",
+    "bumpdependencies": "ncu --upgrade --reject jquery",
     "electronpackage": "node ./scripts/electronpackage.js",
     "electronzip": "node ./scripts/electronzip.js",
-    "clean": "rm -rf public/css public/js public/fonts/glyphicons-*; find ./components -name '*.bundle.js' | xargs rm; find ./components -name '*.map' | xargs rm; find ./components -name '*.css' | xargs rm"
+    "clean": "rm -rf public/css public/js; find ./components -name '*.bundle.js' | xargs rm; find ./components -name '*.map' | xargs rm; find ./components -name '*.css' | xargs rm"
   },
   "repository": {
     "type": "git",
@@ -37,7 +37,7 @@
     "@primer/octicons": "~19.22.0",
     "blueimp-md5": "~2.19.0",
     "body-parser": "~2.2.2",
-    "bootstrap": "~3.4.1",
+    "bootstrap": "~5.3.8",
     "chokidar": "~5.0.0",
     "cookie-parser": "~1.4.7",
     "crossroads": "~0.12.2",
@@ -94,7 +94,6 @@
     "exorcist": "~2.0.0",
     "expect.js": "~0.3.1",
     "globals": "~17.3.0",
-    "less": "~4.5.1",
     "mocha": "~11.7.5",
     "nodemon": "~3.1.14",
     "npm-check-updates": "~19.6.3",
@@ -102,6 +101,7 @@
     "portfinder": "~1.0.38",
     "prettier": "~3.8.1",
     "puppeteer": "~25.4.0",
+    "sass": "~1.102.0",
     "superagent": "~10.3.0",
     "supertest": "~7.2.2"
   },

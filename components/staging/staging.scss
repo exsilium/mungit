@@ -1,4 +1,15 @@
-@import 'public/less/variables.less';
+@import 'public/scss/variables';
+
+// Carried over verbatim from staging.less, which nested `textarea&` inside
+// `.staging .form-control`. Less expanded that to `textarea.staging
+// .form-control`, which never matches because .staging is a div, so the rule
+// has always been inert. It is reproduced here rather than corrected to
+// `.staging textarea.form-control` so that this migration does not change how
+// the commit message box is sized; correcting it is follow-up work.
+textarea.staging .form-control {
+  height: auto;
+  overflow: hidden;
+}
 
 .staging {
   background: #643a44;
@@ -11,10 +22,6 @@
     &:disabled {
       background-color: rgba(64, 36, 43, 0.75);
     }
-    textarea& {
-      height: auto;
-      overflow: hidden;
-    }
   }
 
   textarea.commit-body {
@@ -23,7 +30,7 @@
 
   .arrow {
     border-top-color: #643a44;
-    left: (@log-width-small + 45px);
+    left: ($log-width-small + 45px);
     bottom: -30px;
   }
 
@@ -220,10 +227,10 @@
   }
 }
 
-@media (min-width: @screen-md-min) {
+@media (min-width: $screen-md-min) {
   .staging {
     .arrow {
-      left: (@log-width-large + 45px);
+      left: ($log-width-large + 45px);
     }
   }
 }

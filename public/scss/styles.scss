@@ -1,11 +1,16 @@
-@import 'variables.less';
-@import 'bootstrap.less';
-@import (less) '../../node_modules/nprogress/nprogress.css';
-@import (less) '../../node_modules/jquery-ui/themes/base/core.css';
-@import (less) '../../node_modules/diff2html/bundles/css/diff2html.min.css';
-@import (less) '../../node_modules/@primer/octicons/build/build.css';
-@import (less) '../vendor/css/animate.css';
-@import 'd2h.less';
+@import 'variables';
+@import 'bootstrap';
+@import 'compat';
+
+// Plain CSS dependencies. The .css extension is deliberately omitted: Dart Sass
+// inlines these when the extension is left off, but emits a plain `@import`
+// rule (which the browser would then have to fetch separately) when it is not.
+@import '../../node_modules/nprogress/nprogress';
+@import '../../node_modules/jquery-ui/themes/base/core';
+@import '../../node_modules/diff2html/bundles/css/diff2html.min';
+@import '../../node_modules/@primer/octicons/build/build';
+@import '../vendor/css/animate';
+@import 'd2h';
 
 // Font face declarations
 @font-face {
@@ -61,7 +66,7 @@
 }
 
 ::-webkit-scrollbar-corner {
-  background: @body-bg;
+  background: $body-bg;
 }
 
 // Matching jQuery-UI autocomplete style to bootstrap dropdown
@@ -70,8 +75,8 @@
     cursor: pointer;
 
     &.ui-state-active {
-      color: @dropdown-link-hover-color;
-      background-color: @dropdown-link-hover-bg;
+      color: $dropdown-link-hover-color;
+      background-color: $dropdown-link-hover-bg;
       border: none;
       margin: 0;
     }
@@ -94,7 +99,7 @@
 
 div.list-group-item {
   &:hover {
-    background: @list-group-hover-bg;
+    background: $list-group-hover-bg;
   }
 
   a:hover {

@@ -1,7 +1,7 @@
 const ko = require('knockout');
 const components = require('ungit-components');
 const storage = require('ungit-storage');
-const $ = require('jquery');
+const Modal = require('bootstrap/js/dist/modal');
 
 components.register('app', (args) => {
   return new AppViewModel(args.appContainer, args.server);
@@ -101,7 +101,8 @@ class AppViewModel {
     } else if (event.event === 'modal-show-dialog') {
       this.showModal(event.modal);
     } else if (event.event === 'modal-close-dialog') {
-      $('.modal.fade').modal('hide');
+      const modalDom = document.querySelector('.modal.fade');
+      if (modalDom) Modal.getOrCreateInstance(modalDom).hide();
       this.modal(undefined);
     }
 
@@ -130,11 +131,11 @@ class AppViewModel {
 
     // when dom is ready, open the modal
     const checkExists = setInterval(() => {
-      const modalDom = $('.modal.fade');
-      if (modalDom.length) {
+      const modalDom = document.querySelector('.modal.fade');
+      if (modalDom) {
         clearInterval(checkExists);
-        modalDom.modal();
-        modalDom.on('hidden.bs.modal', function () {
+        Modal.getOrCreateInstance(modalDom).show();
+        modalDom.addEventListener('hidden.bs.modal', () => {
           modal.close();
         });
       }

@@ -1,4 +1,4 @@
-@import 'public/less/variables.less';
+@import 'public/scss/variables';
 
 .commit {
   position: relative;
@@ -49,7 +49,7 @@
     .arrow {
       right: -30px;
       top: 27px;
-      border-left-color: @panel-bg;
+      border-left-color: $panel-bg;
 
       &.shadow {
         display: none;
@@ -64,7 +64,7 @@
     position: relative;
     padding: 10px;
     margin-bottom: 0;
-    width: @log-width-small;
+    width: $log-width-small;
     min-height: 85px;
 
     .gravatar {
@@ -95,10 +95,10 @@
   }
 }
 
-@media (min-width: @screen-md-min) {
+@media (min-width: $screen-md-min) {
   .commit {
     .commit-box > .panel-body {
-      width: @log-width-large;
+      width: $log-width-large;
 
       .gravatar {
         display: block;

@@ -12,7 +12,7 @@
       <div class="clearfix">
         <img
           crossorigin="anonymous"
-          class="pull-left img-circle gravatar"
+          class="float-start rounded-circle gravatar"
           data-bind="attr: { src: `https://secure.gravatar.com/avatar/${authorGravatar()}?default=404`, alt: `Profile Picture of ${authorName()}` }"
           onerror="this.style.display='none';"
         />
@@ -29,15 +29,15 @@
             <span
               class="text-muted"
               data-bind="html: pgpIcon, attr: { title: pgpVerifiedString() }"
-              data-toggle="tooltip"
+              data-bs-toggle="tooltip"
             ></span>
             <!-- /ko -->
           </div>
           <div class="text-muted nodeSummaryContainer">
             <span
               data-bind="text: authorDateFromNow, attr: { title: authorDate }"
-              data-toggle="tooltip"
-              data-placement="bottom"
+              data-bs-toggle="tooltip"
+              data-bs-placement="bottom"
             ></span>
             | +<span data-bind="text: numberOfAddedLines"></span>, -<span
               data-bind="text: numberOfRemovedLines"

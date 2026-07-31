@@ -65,8 +65,8 @@
             class="showBranchingForm"
             type="button"
             data-bind="html: $parent.plusIcon, click: showBranchingForm, visible: !branchingFormVisible()"
-            data-toggle="tooltip"
-            data-placement="bottom"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
             title="Create a branch or tag"
           ></button>
           <!-- ko if: branchingFormVisible -->
@@ -105,8 +105,8 @@
             class="showSearchForm"
             type="button"
             data-bind="html: $parent.searchIcon, click: showRefSearchForm, visible: !refSearchFormVisible()"
-            data-toggle="tooltip"
-            data-placement="bottom"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
             title="Search for a branch or tag"
           ></button>
           <div class="form-inline branch-search" data-bind="visible: refSearchFormVisible()">
