@@ -3,7 +3,6 @@
     "forceConsistentCasingInFileNames": false,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "downlevelIteration": true,
     "skipLibCheck": true,
     "module": "commonjs",
     // Check JS files too

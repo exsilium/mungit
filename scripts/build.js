@@ -6,7 +6,8 @@ const browserify = require('browserify');
 const exorcist = require('exorcist');
 const less = require('less');
 const { mkdirp } = require('mkdirp');
-const tsify = require('tsify');
+
+const tsTransform = require('./ts-transform');
 
 const baseDir = path.join(__dirname, '..');
 
@@ -79,21 +80,16 @@ const baseDir = path.join(__dirname, '..');
     const sourcePrefix = path.join(baseDir, `components/${component}/${component}`);
     const destination = path.join(baseDir, `components/${component}/${component}.bundle.js`);
 
-    const jsSource = `${sourcePrefix}.js`;
-    try {
-      await fs.access(jsSource);
-      await browserifyFile(jsSource, destination);
-    } catch {
-      const tsSource = `${sourcePrefix}.ts`;
-      try {
-        await fs.access(tsSource);
-        await browserifyFile(tsSource, destination);
-      } catch {
-        console.warn(
-          `${sourcePrefix} does not exist. If this component is obsolete, please remove that directory or perform a clean build.`
-        );
-      }
+    // Resolve the entry point first, so that a bundling failure below is reported as
+    // such instead of being misattributed to a missing component.
+    const source = await firstExisting([`${sourcePrefix}.js`, `${sourcePrefix}.ts`]);
+    if (!source) {
+      console.warn(
+        `${sourcePrefix} does not exist. If this component is obsolete, please remove that directory or perform a clean build.`
+      );
+      continue;
     }
+    await browserifyFile(source, destination);
   }
 
   // copy
@@ -134,17 +130,32 @@ async function lessFile(source, destination) {
   console.log(`less ${path.relative(baseDir, destination)}`);
 }
 
+async function firstExisting(candidates) {
+  for (const candidate of candidates) {
+    try {
+      await fs.access(candidate);
+      return candidate;
+    } catch {
+      /* try the next one */
+    }
+  }
+  return undefined;
+}
+
 async function browserifyFile(source, destination) {
   const mapDestination = `${destination}.map`;
-  await new Promise((resolve) => {
+  await new Promise((resolve, reject) => {
     const b = browserify(source, {
       bundleExternal: false,
       debug: true,
-    }).plugin(tsify, {});
+      // `require('../ComponentRoot')` has to resolve to ComponentRoot.ts
+      extensions: ['.js', '.ts'],
+    }).transform(tsTransform);
 
     const outFile = fsSync.createWriteStream(destination);
     outFile.on('close', () => resolve());
-    b.bundle().pipe(exorcist(mapDestination)).pipe(outFile);
+    outFile.on('error', reject);
+    b.bundle().on('error', reject).pipe(exorcist(mapDestination)).pipe(outFile);
   });
   console.log(`browserify ${path.relative(baseDir, destination)}`);
 }
