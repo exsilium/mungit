@@ -99,7 +99,7 @@
     "npm-check-updates": "~19.6.3",
     "nyc": "~18.0.0",
     "portfinder": "~1.0.38",
-    "prettier": "~3.8.1",
+    "prettier": "~3.9.6",
     "puppeteer": "~25.4.0",
     "sass": "~1.102.0",
     "superagent": "~10.3.0",
