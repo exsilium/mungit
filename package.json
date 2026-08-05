@@ -93,7 +93,7 @@
     "eslint-plugin-prettier": "~5.5.5",
     "exorcist": "~2.0.0",
     "expect.js": "~0.3.1",
-    "globals": "~17.3.0",
+    "globals": "~17.9.0",
     "mocha": "~11.7.5",
     "nodemon": "~3.1.14",
     "npm-check-updates": "~23.0.0",
