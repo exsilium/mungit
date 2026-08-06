@@ -126,6 +126,10 @@ div.list-group-item {
 }
 
 .dropdown-menu {
+  > li {
+    position: relative;
+  }
+
   .linked-remove {
     padding-right: 40px;
   }
@@ -135,8 +139,9 @@ div.list-group-item {
   }
 
   .list-link {
-    float: right;
-    margin-top: -23px;
+    position: absolute;
+    right: 0;
+    top: 0;
     padding: 0 4px;
   }
 
