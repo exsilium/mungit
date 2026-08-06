@@ -94,7 +94,7 @@
     "exorcist": "~2.0.0",
     "expect.js": "~0.3.1",
     "globals": "~17.9.0",
-    "mocha": "~11.7.5",
+    "mocha": "~11.8.0",
     "nodemon": "~3.1.14",
     "npm-check-updates": "~23.0.0",
     "nyc": "~18.0.0",
