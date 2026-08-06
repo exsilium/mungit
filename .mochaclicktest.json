@@ -1,6 +1,6 @@
 {
   "spec": "clicktests/spec.*.js",
-  "file": "./source/utils/logger.js",
+  "file": "./test/setup.js",
   "timeout": 20000,
   "bail": true,
   "exit": true
