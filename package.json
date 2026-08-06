@@ -76,7 +76,7 @@
     "temp": "~0.9.4",
     "typescript": "~7.0.2",
     "winston": "~3.19.0",
-    "yargs": "~18.0.0"
+    "yargs": "~18.1.0"
   },
   "devDependencies": {
     "@eslint/js": "~10.0.1",
